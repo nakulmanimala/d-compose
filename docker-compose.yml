@@ -1,22 +1,22 @@
-version: "3.9"
 services:
-  web:
-    build: .
+  webserver:
+    build:
+      dockerfile: DockerfileNginx
+      context: .
+    volumes:
+      - sock:/var/run/php/
+      - docroot:/var/www/html/
+
     ports:
-      - "8000:5000"
-  redis:
-    image: "redis:alpine"
-
-
-# version: "3.9"
-# services:
-#   web:
-#     build: .
-#     ports:
-#       - "8000:5000"
-#     volumes:
-#       - .:/code
-#     environment:
-#       FLASK_DEBUG: True
-#   redis:
-#     image: "redis:alpine"
+      - "80:80"
+  phpfpm:
+    build:
+      dockerfile: DockerfileFPM
+      context: .
+    volumes:
+      - sock:/var/run/php/
+      - docroot:/var/www/html/:ro
+  
+volumes:
+  sock:
+  docroot:
