@@ -1,5 +1,5 @@
 FROM ubuntu:20.04
 RUN apt update && apt install nginx -y
 COPY docker-deps/nginx/default /etc/nginx/sites-enabled/default
-COPY app/index.php /var/www/html/index.php
+COPY app/ /var/www/html/
 CMD [ "nginx","-g","daemon off;" ]
